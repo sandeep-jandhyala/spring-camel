@@ -8,6 +8,7 @@ package com.mycompany.simple.camel;
 
 
 
+import com.mycompany.simple.camel.jms.MyMessageSender;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

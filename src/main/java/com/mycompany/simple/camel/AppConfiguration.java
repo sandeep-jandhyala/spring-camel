@@ -9,8 +9,8 @@ package com.mycompany.simple.camel;
 import javax.jms.Destination;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
-import org.apache.camel.spring.SpringCamelContext;
-import org.springframework.context.ApplicationContext;
+//import org.apache.camel.spring.SpringCamelContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
@@ -22,11 +22,17 @@ import org.springframework.jms.core.JmsTemplate;
 @Configuration
 public class AppConfiguration {
     
+     @Value("${spring.jms.broker.url}")
+    private String brokerUrl;
+    
+    @Value("${spring.jms.source.queue.name}")
+    private String queueName;
+    
     @Bean
     public ActiveMQConnectionFactory connectionFactory()
     {
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory() ;
-        connectionFactory.setBrokerURL("tcp://localhost:61616");        
+        connectionFactory.setBrokerURL(brokerUrl);        
         return connectionFactory;
     }
     
@@ -35,14 +41,15 @@ public class AppConfiguration {
     public JmsTemplate jmsTemplate()
     {
         JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory()) ;
-        Destination d = new ActiveMQQueue("mycamelqueue");        
+        Destination d = new ActiveMQQueue(queueName);        
         jmsTemplate.setDefaultDestination(d);
         return jmsTemplate;
     }
     
-    @Bean
+  /*  @Bean
     public SpringCamelContext camelContext(ApplicationContext applicationContext) throws Exception {
         SpringCamelContext camelContext = new SpringCamelContext(applicationContext);
+      //  camelContext.setProperties(properties);
         camelContext.addRoutes(routeBuilder());
         return camelContext;
     }
@@ -55,6 +62,6 @@ public class AppConfiguration {
     }        
             
    
-    
+    */
     
 }

@@ -1,0 +1,4 @@
+com\mycompany\simple\camel\Application.class
+com\mycompany\simple\camel\jms\MyMessageSender.class
+com\mycompany\simple\camel\AppConfiguration.class
+com\mycompany\simple\camel\route\MyRouteBuilder.class
